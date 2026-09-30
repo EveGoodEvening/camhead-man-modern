@@ -6,6 +6,8 @@
 
 一款在浏览器里玩的小星球都市志怪解谜游戏：没有战斗，只有探索、拍照、找线索和解谜。一周目约 25–35 分钟，有两个结局。画面风格参考 [messenger.abeto.co](https://messenger.abeto.co)：小星球、两段式赛璐璐着色、手绘感墨线、手绘天空。
 
+**[在线试玩](https://evegoodevening.github.io/camhead-man-modern/)**
+
 | | |
 |---|---|
 | ![标题画面](docs/screenshots/title.jpg) | ![对话](docs/screenshots/dialog.jpg) |
