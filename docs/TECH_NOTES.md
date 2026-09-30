@@ -4,7 +4,7 @@ Project: **头上长手机摄像头的男人**, a tiny-planet urban 志怪 myste
 Audience: the implementation agents. Everything below was **checked on this machine on 2026-09-29**, either
 against the r186 source in `node_modules/three`, against npm registry metadata, or by running a throwaway
 prototype in headless Chromium + SwiftShader. The prototype produced every number and screenshot quoted here.
-It lives at `/tmp/claude-0/-root-github-com-EveGoodEvening-camera-man-modern/26c900b3-e443-4fe6-9049-5dd641639339/scratchpad/tech/proj`
+It lives at `/tmp/claude-0/-root-github-com-EveGoodEvening-camhead-man-modern/26c900b3-e443-4fe6-9049-5dd641639339/scratchpad/tech/proj`
 (it is ephemeral, so the code you need is copied into this file).
 
 > **Superseded values — read this first.** This file was written in parallel with the other docs, and its *API facts* (r186 signatures, toolchain pins, SwiftShader measurements, gotchas) remain authoritative. Its *prototype design values* are **not**. Where it disagrees, the other docs win:
@@ -72,7 +72,7 @@ Legend: ✅ = verified by running it here · 🔎 = verified by reading r186 / p
 
 ```json
 {
-  "name": "camera-man-modern",
+  "name": "camhead-man-modern",
   "private": true,
   "version": "0.0.0",
   "type": "module",

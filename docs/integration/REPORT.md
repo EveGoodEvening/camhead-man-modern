@@ -5,7 +5,7 @@
 
 I did update `docs/integration/CHANGES.md` (rows C29–C33), `docs/integration/STATUS.md` (a "Final gate" section) and `AGENTS.md` (4 `[I-gate]` lessons). The dev server on :5177 is stopped and no browser slots are held.
 
-Everything below comes from a clean `npm ci` and a full re-run after my fixes. Evidence is in `SP/gate/final/<suite>/`, where `SP=/tmp/claude-0/-root-github-com-EveGoodEvening-camera-man-modern/26c900b3-e443-4fe6-9049-5dd641639339/scratchpad`.
+Everything below comes from a clean `npm ci` and a full re-run after my fixes. Evidence is in `SP/gate/final/<suite>/`, where `SP=/tmp/claude-0/-root-github-com-EveGoodEvening-camhead-man-modern/26c900b3-e443-4fe6-9049-5dd641639339/scratchpad`.
 
 ## Checklist
 

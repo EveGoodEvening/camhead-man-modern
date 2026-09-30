@@ -61,7 +61,7 @@ Phase 2  I   integration: typecheck → tests → crossref → smoke boot → go
 ### 1.2 `package.json`
 ```json
 {
-  "name": "camera-man-modern", "private": true, "version": "0.1.0", "type": "module",
+  "name": "camhead-man-modern", "private": true, "version": "0.1.0", "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
