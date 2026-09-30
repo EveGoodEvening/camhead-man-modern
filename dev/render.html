@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>render self-test (A)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Long+Cang&family=Ma+Shan+Zheng&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      html, body { margin:0; overflow:hidden; background:#65c1bc }
+      #game { position:fixed; inset:0; width:100vw; height:100vh; display:block; }
+      #ui { position:fixed; inset:0; pointer-events:none; }
+      #fade { position:fixed; inset:0; background:#000; opacity:0; pointer-events:none; }
+    </style>
+  </head>
+  <body>
+    <canvas id="game" data-testid="game-canvas"></canvas>
+    <div id="ui"></div>
+    <div id="fade"></div>
+    <script type="module" src="/src/render/dev.ts"></script>
+  </body>
+</html>

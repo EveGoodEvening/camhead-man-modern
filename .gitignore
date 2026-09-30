@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.build/
+.smoke/
+test-results/
+playwright-report/
+shots/

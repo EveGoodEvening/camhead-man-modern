@@ -1,0 +1,31 @@
+/* src/ui/hud/wayfinder.css — P3 wayfinding: 土地's incense badge + ink arrow at the screen edge (ART §8.1 slab style). */
+/* P3r2 U3: never smaller than 40 px (at 844×390 the scaled badge was 19 px, lost between the touch buttons).
+   P3r3 U2: 56 px (a 44 px burner disc at 1280×720, was 36), with its distance label and a one-time intro bubble. */
+.ui-way { --px: max(0.84px, calc(var(--u) * 1px)); position: absolute; left: 0; top: 0; width: calc(56 * var(--px)); height: calc(56 * var(--px));
+  margin: calc(-28 * var(--px)) 0 0 calc(-28 * var(--px)); opacity: 0; will-change: transform, opacity; }
+.ui-way-badge { position: absolute; inset: calc(6 * var(--px)); border-radius: 50%; background: var(--paper);
+  border: calc(2.5 * var(--px)) solid var(--ink); box-shadow: calc(2 * var(--px)) calc(3 * var(--px)) 0 var(--shadow); }
+.ui-way-badge svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ui-way-arrow { position: absolute; left: 50%; top: 50%; width: calc(26 * var(--px)); height: calc(19 * var(--px));
+  margin: calc(-9.5 * var(--px)) 0 0 calc(-13 * var(--px)); }
+.ui-way-arrow svg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* 「烟 · 23m」 and the intro bubble sit on the badge's inner side (toward the screen centre) */
+.ui-way-label, .ui-way-tip { position: absolute; white-space: nowrap; pointer-events: none; color: var(--ink); background: var(--paper);
+  font: max(13px, calc(15 * var(--px))) / 1.2 var(--font-body); padding: calc(3 * var(--px)) calc(8 * var(--px)); rotate: -1deg; }
+.ui-way-tip { display: none; white-space: normal; width: max-content; max-width: calc(250 * var(--px)); padding: calc(7 * var(--px)) calc(11 * var(--px));
+  font-size: max(15px, calc(17 * var(--px))); line-height: 1.35; word-break: keep-all; overflow-wrap: anywhere; background: var(--notebook, var(--paper)); }
+.ui-way.ui-way-intro .ui-way-tip { display: block; }
+.ui-way.ui-way-intro .ui-way-label { display: none; }
+.ui-way-el .ui-way-label, .ui-way-el .ui-way-tip { left: calc(100% + 4 * var(--px)); top: 50%; translate: 0 -50%; }
+.ui-way-er .ui-way-label, .ui-way-er .ui-way-tip { right: calc(100% + 4 * var(--px)); top: 50%; translate: 0 -50%; }
+.ui-way-et .ui-way-label, .ui-way-et .ui-way-tip { top: calc(100% + 2 * var(--px)); left: 50%; translate: calc(-50% + var(--tip-dx, 0px)) 0; }
+.ui-way-eb .ui-way-label, .ui-way-eb .ui-way-tip { bottom: calc(100% + 2 * var(--px)); left: 50%; translate: calc(-50% + var(--tip-dx, 0px)) 0; }
+.ui-way-et.ui-way-hr .ui-way-label, .ui-way-eb.ui-way-hr .ui-way-label { left: calc(100% + 2 * var(--px)); top: 50%; bottom: auto; translate: 0 -50%; }
+.ui-way-et.ui-way-hl .ui-way-label, .ui-way-eb.ui-way-hl .ui-way-label { left: auto; right: calc(100% + 2 * var(--px)); top: 50%; bottom: auto; translate: 0 -50%; }
+.ui-way.ui-way-night .ui-way-label, .ui-way.ui-way-night .ui-way-tip { background: #2a3350; color: #fff1c9; border-color: #fff1c9; }
+.ui-way-smoke { animation: ui-way-curl 2.4s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes ui-way-curl { 0%, 100% { transform: translateX(0) scaleY(1); } 50% { transform: translateX(1.2px) scaleY(1.08); } }
+.ui-way.ui-way-night .ui-way-badge { background: #2a3350; border-color: #fff1c9; box-shadow: 0 0 calc(8 * var(--px)) rgba(255, 226, 150, .55); }
+.ui-way.ui-way-night .ui-way-ink { stroke: #fff1c9; }
+.ui-way.ui-way-night .ui-way-ember { fill: #ffcf6a; }
+.ui-way.ui-way-night .ui-way-arrow path { fill: #fff1c9; stroke: #2a3350; }

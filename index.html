@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>显影 · 望潮里志怪</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&family=ZCOOL+KuaiLe&family=Long+Cang&family=Ma+Shan+Zheng&family=Silkscreen:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+QingKe+HuangYou&display=swap&text=%E6%98%BE%E5%BD%B1%E6%9C%9B%E6%BD%AE%E9%87%8C%E5%BF%97%E6%80%AA%E5%BC%80%E6%9C%BA%E7%BB%A7%E7%BB%AD%E8%AE%BE%E7%BD%AE" rel="stylesheet" />
+    <style>
+      html, body { margin:0; overflow:hidden; background:#65c1bc }
+      #game { position:fixed; inset:0; width:100vw; height:100vh; display:block; }
+      #ui { position:fixed; inset:0; pointer-events:none; }
+      #fade { position:fixed; inset:0; background:#000; opacity:0; pointer-events:none; }
+    </style>
+  </head>
+  <body>
+    <canvas id="game" data-testid="game-canvas"></canvas>
+    <div id="ui"></div>
+    <div id="fade"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

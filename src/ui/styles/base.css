@@ -1,0 +1,159 @@
+/* src/ui/styles/base.css — owner E. ART §8.1 tokens + slab rules; HUD, prompt, toasts, tutorials (ART §8.2). */
+:root {
+  --u: 1;
+  --px: calc(var(--u) * 1px);
+  --paper: #f8f8f6; --text: #1f282d; --ink: #2f3a3f; --shadow: #405157;
+  --tag: #66bde6; --tag-shadow: #2f6f8f; --tag-npc: #f0d055; --tag-spirit: #c8433a; --spirit-paper: #efe9d8;
+  --button: #f0d055; --button-side: #bf8838; --title-face: #edf2e4; --title-side: #9baa9e;
+  --notebook: #f3efe2; --grid: #d9d3bf; --tape: #e9dca6; --ash: #8d8a86; --ink-deep: #1f282d;
+  --green: #62ac91; --wx-green: #a9dc8e; --cinnabar: #c8433a; --sage: #6f8a7f; --ochre: #bd8a44; --teal: #456d75;
+  --font-display: "ZCOOL QingKe HuangYou", "WenQuanYi Zen Hei", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-body: "ZCOOL KuaiLe", "WenQuanYi Zen Hei", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-hand: "Long Cang", "ZCOOL KuaiLe", "Kaiti SC", "STKaiti", "KaiTi", cursive;
+  --font-brush: "Ma Shan Zheng", "Kaiti SC", "STKaiti", "KaiTi", serif;
+  --font-hud: "Silkscreen", "Courier New", monospace;
+  --b3: calc(3 * var(--px));
+  --slab-shadow: calc(4 * var(--px)) calc(5 * var(--px)) 0 var(--shadow);
+  --stamp: 140ms cubic-bezier(.34, 1.56, .64, 1);
+}
+/* --u is set inline on .ui-root (dom.ts trackScale): re-derive the length tokens there, or they keep :root's --u */
+.ui-root { --px: calc(var(--u) * 1px); --b3: calc(3 * var(--px)); --slab-shadow: calc(4 * var(--px)) calc(5 * var(--px)) 0 var(--shadow); }
+
+.ui-root { position: absolute; inset: 0; pointer-events: none; font-family: var(--font-body); color: var(--text);
+  font-size: max(18px, calc(22 * var(--px))); user-select: none; -webkit-user-select: none; overflow: hidden; -webkit-tap-highlight-color: transparent; }
+:where(.ui-root) :where(button, input) { font: inherit; color: inherit; }
+.ui-layer { position: absolute; inset: 0; pointer-events: none; }
+.ui-hidden { display: none !important; }
+.ui-live { pointer-events: auto; }
+
+/* ---- the slab: flat fill, 3 px ink border, hard 4×5 shadow, no blur, corners ≤ 3 px (ART §8.1) ---- */
+.ui-slab { background: var(--paper); border: var(--b3) solid var(--ink); box-shadow: var(--slab-shadow); border-radius: calc(2 * var(--px)); }
+.ui-stamp { animation: ui-stamp var(--stamp) both; }
+.ui-out { animation: ui-out 90ms ease-in both; }
+@keyframes ui-stamp { 0% { scale: .94; rotate: -1.2deg; opacity: 0; } 55% { opacity: 1; } 100% { scale: 1; rotate: 0deg; opacity: 1; } }
+@keyframes ui-out { to { scale: .97; opacity: 0; } }
+@keyframes ui-bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 calc(-2 * var(--px)); } }
+@keyframes ui-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: .25; } }
+
+/* keycaps inside text: a mini yellow slab in Silkscreen (ART §8.2 prompt key cap) */
+.ui-key { display: inline-block; min-width: calc(20 * var(--px)); padding: 0 calc(5 * var(--px)); margin: 0 calc(2 * var(--px));
+  font: calc(13 * var(--px)) / calc(22 * var(--px)) var(--font-hud); text-align: center; color: var(--text); background: var(--button);
+  border: calc(2 * var(--px)) solid var(--ink); box-shadow: calc(2 * var(--px)) calc(2 * var(--px)) 0 var(--ink);
+  vertical-align: calc(2 * var(--px)); border-radius: calc(2 * var(--px)); }
+
+/* ---- HUD: objective chip (top-left) ---- */
+.ui-objective { position: absolute; left: calc(24 * var(--px)); top: calc(22 * var(--px)); max-width: calc(520 * var(--px));
+  padding: calc(6 * var(--px)) calc(14 * var(--px)) calc(6 * var(--px)) calc(34 * var(--px)); font-size: max(18px, calc(18 * var(--px)));
+  line-height: 1.3; rotate: -1deg;
+  /* P3r2 U1: wrap to two lines (never ellipsize): the wayfinding steps end with the place (「…（绿天桥旁）」), and a
+     phone-landscape chip holds only ~16 CJK characters per line. The longest step is 21 characters. */
+  white-space: normal; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+  /* break at the step's own seams (after 「，」 / 「——」) when it can, anywhere only when a phrase is wider than the chip */
+  word-break: keep-all; overflow-wrap: anywhere; line-break: strict; }
+.ui-objective::before { content: ''; position: absolute; left: calc(11 * var(--px)); top: 50%; width: calc(12 * var(--px)); height: calc(12 * var(--px));
+  margin-top: calc(-6 * var(--px)); background: var(--cinnabar); border: calc(2 * var(--px)) solid var(--ink); rotate: 45deg; }
+
+/* ---- HUD: phone status (top-right): signal bars, time, battery 1% ---- */
+.ui-status { position: absolute; right: calc(24 * var(--px)); top: calc(22 * var(--px)); display: flex; align-items: center;
+  gap: calc(10 * var(--px)); padding: calc(5 * var(--px)) calc(10 * var(--px)); background: var(--ink); color: var(--paper);
+  border: var(--b3) solid var(--ink-deep); box-shadow: var(--slab-shadow); rotate: .6deg; font: calc(14 * var(--px)) / 1 var(--font-hud); }
+.ui-bars { display: flex; align-items: flex-end; gap: calc(2 * var(--px)); height: calc(14 * var(--px)); }
+.ui-bars i { display: block; width: calc(4 * var(--px)); background: #5d6a6d; }
+.ui-bars i:nth-child(1) { height: 25%; } .ui-bars i:nth-child(2) { height: 50%; } .ui-bars i:nth-child(3) { height: 75%; } .ui-bars i:nth-child(4) { height: 100%; }
+.ui-bars i.on { background: var(--paper); }
+.ui-bars[data-bars="0"] { position: relative; }
+.ui-bars[data-bars="0"]::after { content: ''; position: absolute; left: -2px; right: -2px; top: 45%; height: calc(2 * var(--px)); background: var(--cinnabar); rotate: -35deg; }
+.ui-batt { position: relative; width: calc(22 * var(--px)); height: calc(11 * var(--px)); border: calc(2 * var(--px)) solid var(--paper); box-sizing: border-box; }
+.ui-batt::before { content: ''; position: absolute; right: calc(-5 * var(--px)); top: calc(2 * var(--px)); width: calc(2 * var(--px)); height: calc(3 * var(--px)); background: var(--paper); }
+.ui-batt::after { content: ''; position: absolute; left: 1px; top: 1px; bottom: 1px; width: calc(2 * var(--px)); background: var(--cinnabar); }
+.ui-status .ui-pct { color: #ff8f84; }
+
+/* ---- world-anchored prompt (ART §8.2) ---- */
+.ui-prompt { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: calc(6 * var(--px));
+  padding: calc(3 * var(--px)) calc(10 * var(--px)) calc(3 * var(--px)) calc(5 * var(--px)); white-space: nowrap;
+  font-size: max(18px, calc(18 * var(--px))); will-change: transform; }
+.ui-prompt .ui-key { margin: 0; font-size: calc(14 * var(--px)); }
+/* the first prompts teach the key (「按 [E] 调查」) until the first E: yellow slab, bobbing key cap */
+.ui-prompt .ui-pre { display: none; }
+.ui-prompt.ui-teach { background: var(--button); font-size: max(20px, calc(21 * var(--px))); }
+.ui-prompt.ui-teach .ui-pre { display: inline; }
+.ui-prompt.ui-teach .ui-key { background: var(--paper); animation: ui-bob .8s ease-in-out infinite; }
+
+/* ---- toasts ---- */
+.ui-toasts { position: absolute; left: 50%; top: calc(20 * var(--px)); translate: -50% 0; display: flex; flex-direction: column;
+  align-items: center; gap: calc(10 * var(--px)); }
+.ui-toasts.ui-held { visibility: hidden; }
+.ui-toasts.ui-low { left: auto; right: calc(24 * var(--px)); top: calc(90 * var(--px)); translate: none; align-items: flex-end; }
+.ui-toasts.ui-low .ui-toast { max-width: calc(330 * var(--px)); }
+.ui-toasts.ui-low .ui-toast-txt { white-space: normal; }
+.ui-toast { display: flex; align-items: center; gap: calc(8 * var(--px)); max-width: calc(560 * var(--px));
+  padding: calc(6 * var(--px)) calc(14 * var(--px)); font-size: max(18px, calc(19 * var(--px))); line-height: 1.3; }
+.ui-toast svg { width: calc(26 * var(--px)); height: calc(26 * var(--px)); flex: none; }
+.ui-toast.ui-t-wx { background: var(--wx-green); }
+.ui-toast.ui-t-bst { background: var(--ink-deep); color: var(--spirit-paper); border-color: var(--cinnabar); box-shadow: calc(4 * var(--px)) calc(5 * var(--px)) 0 var(--cinnabar); }
+.ui-toast.ui-t-clue { background: var(--notebook); font-family: var(--font-body); }
+.ui-toast .ui-toast-txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ui-toast.ui-t-plain .ui-toast-txt { white-space: normal; }
+/* P3r3: 微信 previews wrap at their own seams (after 「，」 / 「——」) instead of being cut by the ellipsis on phones;
+   three lines at most, and the column never grows wider than the screen */
+.ui-toast.ui-t-wx { max-width: min(calc(560 * var(--px)), calc(100vw - 32px)); }
+.ui-toast.ui-t-wx .ui-toast-txt { white-space: normal; word-break: keep-all; overflow-wrap: anywhere; display: -webkit-box;
+  -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; }
+
+/* ---- tutorial bubble (GDD §11.14) ---- */
+/* at most two stacked bubbles, bottom-left (never the centre); the first (primary) sits lowest and carries the tail */
+.ui-tuts { position: absolute; left: calc(28 * var(--px)); bottom: calc(150 * var(--px)); display: flex; flex-direction: column-reverse;
+  align-items: flex-start; gap: calc(14 * var(--px)); }
+.ui-tut { position: relative; max-width: calc(400 * var(--px));
+  padding: calc(10 * var(--px)) calc(16 * var(--px)); font-size: max(18px, calc(20 * var(--px))); line-height: 1.6; rotate: -1.2deg; }
+.ui-tut + .ui-tut { rotate: .8deg; }
+.ui-tut + .ui-tut::after { display: none; }
+/* short (phone landscape) screens: one bubble at a time, the other waits its turn */
+@media (max-height: 520px) { .ui-tut + .ui-tut { display: none; } .ui-tuts { bottom: calc(110 * var(--px)); } }
+.ui-tut::after { content: ''; position: absolute; left: calc(26 * var(--px)); bottom: calc(-15 * var(--px)); width: calc(18 * var(--px));
+  height: calc(18 * var(--px)); background: var(--paper); border-right: var(--b3) solid var(--ink); border-bottom: var(--b3) solid var(--ink); rotate: 45deg; }
+
+/* ---- click-to-lock hint (pointer lock, realtime only) ---- */
+.ui-lockhint { position: absolute; left: 50%; top: 58%; translate: -50% 0; padding: calc(6 * var(--px)) calc(18 * var(--px));
+  font-size: max(18px, calc(20 * var(--px))); rotate: -.8deg; }
+
+/* ---- note popup (字条 / 信封 原文) ---- */
+.ui-note-wrap { position: absolute; inset: 0; display: flex; align-items: flex-start; justify-content: center; background: rgba(31, 40, 45, .45); pointer-events: auto;
+  /* P3r2 look L1: docked in the upper half, clear of the dialogue box (top 470 of 720) that captions it */
+  padding-top: calc(36 * var(--px)); }
+.ui-note .ui-nowrap { white-space: nowrap; }
+.ui-note { width: calc(460 * var(--px)); padding: calc(26 * var(--px)) calc(34 * var(--px)); background: var(--notebook);
+  border: var(--b3) solid var(--ink); box-shadow: var(--slab-shadow); rotate: -1.5deg; font: max(20px, calc(28 * var(--px))) / 1.5 var(--font-hand); color: var(--ink); }
+.ui-note h3 { margin: 0 0 calc(10 * var(--px)); font: calc(20 * var(--px)) var(--font-display); letter-spacing: 2px; color: var(--shadow); }
+.ui-note .ui-cont { margin-top: calc(14 * var(--px)); font: max(15px, calc(15 * var(--px))) var(--font-body); color: var(--shadow); text-align: right; }
+/* P3r3 U3: the narration after the letter (「称呼那一格被水渍洇掉了。」) is its own line in the UI font, wrapped */
+.ui-note-cap { margin-top: calc(12 * var(--px)); padding-top: calc(8 * var(--px)); border-top: calc(1.5 * var(--px)) dashed rgba(47, 58, 63, .35);
+  font: max(16px, calc(17 * var(--px))) / 1.45 var(--font-body); color: var(--shadow); white-space: normal; word-break: keep-all; overflow-wrap: anywhere; }
+/* the smudged character is a water-bled ink blot, not a glyph (the brush font drew \25A2 like 口: 「阿口」) */
+.ui-note .ui-blot { display: inline-block; position: relative; width: 1em; height: 1em; margin: 0 .04em; vertical-align: -.14em;
+  color: transparent; overflow: hidden; border-radius: 47% 53% 41% 59% / 56% 44% 58% 42%; rotate: -8deg;
+  background: radial-gradient(ellipse 46% 40% at 44% 52%, rgba(47, 58, 63, .82) 0 55%, rgba(47, 58, 63, .42) 80%, rgba(47, 58, 63, 0) 100%),
+    radial-gradient(ellipse 60% 55% at 58% 46%, rgba(70, 92, 110, .28) 0 60%, rgba(70, 92, 110, 0) 100%);
+  filter: blur(.4px); }
+.ui-note .ui-blot::after { content: ''; position: absolute; inset: -8%; border-radius: inherit;
+  box-shadow: inset 0 0 0 .07em rgba(90, 112, 128, .28); }
+
+/* ---- touch controls (coarse pointers only) ---- */
+.ui-touch { position: absolute; inset: 0; pointer-events: auto; touch-action: none; }
+.ui-stick { position: absolute; left: 0; top: 0; width: 120px; height: 120px; border: var(--b3) solid var(--ink); border-radius: 50%; background: rgba(248, 248, 246, .25); }
+.ui-knob { position: absolute; left: 36px; top: 36px; width: 48px; height: 48px; border-radius: 50%; background: var(--button); border: var(--b3) solid var(--ink); }
+.ui-touch-btns { position: absolute; right: calc(24 * var(--px)); bottom: calc(24 * var(--px)); display: grid; grid-template-columns: repeat(2, auto); gap: calc(14 * var(--px)); direction: rtl; }
+.ui-touch-tools { position: absolute; right: calc(24 * var(--px)); top: 50%; translate: 0 -100%; display: flex; flex-direction: column; gap: calc(10 * var(--px)); }
+/* P3r2 U1: below a two-line objective chip on a phone (chip bottom ≈ 70 px at 844×390) */
+.ui-touch-back { position: absolute; left: calc(18 * var(--px)); top: max(82px, calc(110 * var(--px))); }
+.ui-tbtn { direction: ltr; min-width: max(64px, calc(96 * var(--px))); min-height: max(44px, calc(64 * var(--px))); font: max(16px, calc(24 * var(--px))) var(--font-display); letter-spacing: 2px; touch-action: none; user-select: none; -webkit-user-select: none; }
+.ui-touch-tools .ui-tbtn, .ui-touch-back .ui-tbtn { min-height: max(40px, calc(52 * var(--px))); font-size: max(15px, calc(20 * var(--px))); }
+.ui-tbtn:active, .ui-tbtn.ui-down { background: var(--button); }
+.ui-tbtn.ui-on { background: var(--button); box-shadow: inset 0 0 0 calc(3 * var(--px)) var(--ink); }
+.ui-tbtn.ui-ready { animation: ui-tready 1.1s ease-in-out infinite; }
+@keyframes ui-tready { 50% { background: #fff3c4; scale: 1.06; } }
+/* touch devices: the world prompt has no key to name (the 交互 button pulses instead) */
+.ui-touch-device .ui-prompt .ui-key { display: none; }
+
+/* ?test: deterministic screenshots (ARCHITECTURE §2.10 / §3.E) */
+body.test-mode *, body.test-mode *::before, body.test-mode *::after { animation: none !important; transition: none !important; }
