@@ -1,0 +1,16 @@
+{
+  "S": ["index.html", "package.json", "package-lock.json", "tsconfig.json", "vite.config.ts", "playwright.config.ts", ".gitignore",
+        "scripts/**", "e2e/**", "src/main.ts", "src/debug.ts", "src/types.ts", "src/events.ts", "src/contracts.ts",
+        "src/core/**", "src/art/**", "src/data/zh.ts", "src/data/crossref.test.ts", "src/data/no-cjk.test.ts", "dev/core.html"],
+  "A": ["src/render/**", "src/audio/**", "src/data/phases.ts", "dev/render.html", "dev/audio.html"],
+  "B": ["src/world/**", "src/data/locations.ts", "src/data/ids/spots.ts", "src/data/zh/world.ts", "dev/world.html"],
+  "C": ["src/chars/**", "src/data/npcs.ts", "src/data/zh/chars.ts", "dev/chars.html"],
+  "D": ["src/lens/**", "src/data/photoTargets.ts", "src/data/labels.ts", "src/data/bestiary.ts", "src/data/ids/lens.ts",
+        "src/data/zh/lens.ts", "dev/lens.html"],
+  "E": ["src/ui/**", "src/data/ids/ui.ts", "src/data/zh/ui.ts", "dev/ui.html"],
+  "F": ["src/story/**", "src/data/story.ts", "src/data/dialogue.ts", "src/data/items.ts", "src/data/puzzles.ts", "src/data/wx.ts",
+        "src/data/show.ts", "src/data/interacts.ts", "src/data/ids/story.ts", "src/data/zh/story.ts", "src/data/zh/dlg.ts",
+        "src/data/zh/wx.ts", "src/data/zh/cards.ts", "dev/story.html"],
+  "shared-append-only": ["AGENTS.md"],
+  "per-agent": ["docs/integration/requests-<id>.md"]
+}

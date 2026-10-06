@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI Gallery</title>
+    <!-- owner E. Gallery of every UI component state: each button loads the game with ?dev=ui:<state>[,<id>]
+         (src/ui/dev.ts applies the state once boot cards are cleared). Realtime mode, muted. -->
+    <style>
+      :root { --ink: #2f3a3f; --paper: #f8f8f6; --bg: #65c1bc; }
+      html, body { margin: 0; height: 100%; background: var(--bg); font: 14px/1.4 "Silkscreen", "Courier New", monospace; color: var(--ink); }
+      body { display: grid; grid-template-columns: 220px 1fr; }
+      nav { overflow-y: auto; padding: 12px; background: var(--paper); border-right: 3px solid var(--ink); }
+      nav h1 { font-size: 15px; margin: 0 0 8px; }
+      nav label { display: block; margin: 8px 0 4px; }
+      nav select, nav button { width: 100%; box-sizing: border-box; margin: 2px 0; padding: 4px 6px; font: inherit; background: var(--paper);
+        border: 2px solid var(--ink); box-shadow: 2px 3px 0 #405157; cursor: pointer; text-align: left; }
+      nav button.on { background: #f0d055; }
+      main { position: relative; }
+      iframe { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 24px); border: 3px solid var(--ink); background: #1f282d; }
+      @media (max-width: 700px) { body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; } main { min-height: 60vh; } }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1>UI gallery</h1>
+      <label for="ch">chapter</label>
+      <select id="ch">
+        <option value="">(skipTitle)</option><option>prologue</option><option>ch1</option><option selected>ch2</option>
+        <option>ch3</option><option>finale</option>
+      </select>
+      <label for="test">mode</label>
+      <select id="test"><option value="">realtime</option><option value="test">?test (static)</option></select>
+      <div id="states"></div>
+    </nav>
+    <main><iframe id="view" title="game"></iframe></main>
+    <script>
+      const STATES = [
+        ['title', ''], ['dialog', 'xiaolin'], ['choices', 'xiaolin'], ['phone', ''], ['album-detail', ''], ['phone-wx', ''],
+        ['phone-memo', ''], ['keypad', ''], ['lighthouse', ''], ['namepicker', ''], ['milkbox', ''], ['show', ''],
+        ['chapter', 'ch1'], ['chapter', 'epigraph'], ['liaozhai', 'juan1'], ['liaozhai', 'zhong_B'], ['photo', 'ph_2006_group'],
+        ['epilogue', 'A'], ['epilogue', 'B'], ['credits', ''], ['pause', ''], ['settings', ''], ['toasts', ''],
+        ['tutorial', 'tut_night'], ['note', ''],
+      ];
+      const box = document.getElementById('states');
+      const view = document.getElementById('view');
+      let cur = null;
+      for (const [s, arg] of STATES) {
+        const b = document.createElement('button');
+        b.textContent = arg ? `${s} · ${arg}` : s;
+        b.addEventListener('click', () => {
+          cur?.classList.remove('on'); cur = b; b.classList.add('on');
+          const ch = document.getElementById('ch').value;
+          const test = document.getElementById('test').value;
+          const q = new URLSearchParams({ mute: '', seed: '1' });
+          if (test) q.set('test', '');
+          if (ch) q.set('chapter', ch); else q.set('skipTitle', '');
+          q.set('dev', `ui:${s}${arg ? `,${arg}` : ''}`);
+          view.src = `/?${q.toString().replace(/=(&|$)/g, '$1')}`;
+          if (test) {
+            // ?test never runs the loop: drive a few ticks once the game is ready so the dev state applies
+            const drive = () => {
+              const g = view.contentWindow && view.contentWindow.__game;
+              if (!g || !g.ready) { setTimeout(drive, 200); return; }
+              let n = 0;
+              const tick = () => { g.step(10); if (++n < 30) setTimeout(tick, 0); };
+              tick();
+            };
+            setTimeout(drive, 500);
+          }
+        });
+        box.appendChild(b);
+      }
+    </script>
+  </body>
+</html>

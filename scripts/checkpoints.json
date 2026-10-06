@@ -1,0 +1,7 @@
+{
+  "_doc": "Pixel rects [x0, y0, x1, y1] at 1280x720 for GDD §19.4 region checks. Filled by the integrator from the first reviewed baseline; null = check is a warning.",
+  "_baseline": "2026-09-29 look lane (I-look), cp-look-* baselines (P3r2 camera: day_start.sky = the sky between the banyan crown and the status bar — S_wake now ends one step off the bench, so the bus-shelter roof reaches the top rows): dusk_temple.sky = the open dusk sky right of the banyan crown; night_store.litWall = the moonlit plaster band between the store sign and the green stripe; night_store.sky = the sky gap above the arcade roofs (the 2-storey arcade store fills the top rows at this spot, same reason as dusk_temple).",
+  "day_start": { "sky": [940, 0, 1080, 100] },
+  "dusk_temple": { "sky": [1000, 0, 1280, 240] },
+  "night_store": { "litWall": [60, 178, 540, 192], "sky": [1120, 0, 1172, 34] }
+}

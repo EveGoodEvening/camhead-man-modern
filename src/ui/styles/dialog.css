@@ -1,0 +1,52 @@
+/* src/ui/styles/dialog.css — owner E. Dialog box, name tag, next button, choices, show picker (ART §8.2). */
+.ui-dlg { position: absolute; left: 50%; top: calc(470 * var(--px)); width: calc(680 * var(--px)); min-height: calc(120 * var(--px));
+  translate: -50% 0; box-sizing: border-box; padding: calc(28 * var(--px)) calc(56 * var(--px)); isolation: isolate;
+  font-size: max(18px, calc(26 * var(--px))); line-height: 1.45; color: var(--text); pointer-events: auto; }
+.ui-dlg::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--paper); border: var(--b3) solid var(--ink);
+  box-shadow: var(--slab-shadow); transform: skewX(-1.5deg) rotate(-.3deg); }
+.ui-dlg-text { min-height: calc(76 * var(--px)); max-height: calc(114 * var(--px)); overflow: hidden; white-space: pre-wrap;
+  /* P3r3 T3: CJK breaks between any two glyphs anyway; strict kinsoku; box.ts adds .ui-bal (balance) when the last row would
+     be an orphan like 「了。」 (break-all left them; Chrome's pretty ignores two-row paragraphs) */
+  word-break: normal; line-break: strict; overflow-wrap: anywhere; text-wrap: pretty; }
+.ui-dlg-text.ui-bal { text-wrap: balance; }   /* set by box.ts when the last row would be an orphan */
+.ui-dlg-text .ui-ghost { visibility: hidden; }
+.ui-dlg[data-speaker="me"] .ui-dlg-text { color: #24485a; }
+.ui-dlg[data-speaker="system"] .ui-dlg-text, .ui-dlg[data-speaker="narr"] .ui-dlg-text { color: var(--shadow); }
+
+.ui-name { position: absolute; left: calc(-30 * var(--px)); top: calc(-50 * var(--px)); min-width: calc(150 * var(--px));
+  padding: calc(3 * var(--px)) calc(18 * var(--px)); box-sizing: border-box; text-align: center; background: var(--tag);
+  border: var(--b3) solid var(--ink); box-shadow: calc(3 * var(--px)) calc(4 * var(--px)) 0 var(--ink); rotate: -1deg;
+  font: calc(30 * var(--px)) / 1.25 var(--font-display); letter-spacing: calc(3 * var(--px)); color: #fff; text-shadow: 2px 2px 0 var(--tag-shadow); }
+.ui-name.ui-npc { background: var(--tag-npc); color: var(--text); text-shadow: none; }
+.ui-name.ui-spirit { background: var(--tag-spirit); color: var(--spirit-paper); text-shadow: 2px 2px 0 #7a2621; }
+.ui-name.ui-system { background: var(--ash); color: var(--text); text-shadow: none; }
+.ui-name.ui-narr { display: none; }   /* narration (speaker narr): no tag at all */
+.ui-name.ui-voice::after { content: attr(data-sub); margin-left: calc(10 * var(--px)); font: calc(15 * var(--px)) var(--font-body); letter-spacing: 0; opacity: .8; }
+
+.ui-next { position: absolute; right: calc(-20 * var(--px)); bottom: calc(-24 * var(--px)); width: calc(56 * var(--px)); height: calc(56 * var(--px));
+  display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer; background: var(--paper);
+  border: var(--b3) solid var(--ink); box-shadow: var(--slab-shadow); border-radius: calc(2 * var(--px)); }
+.ui-next svg { width: calc(26 * var(--px)); height: calc(32 * var(--px)); margin-left: calc(4 * var(--px)); }
+.ui-next.ui-wait svg { opacity: .35; }
+.ui-next.ui-ready svg { animation: ui-bob .833s steps(2, jump-none) infinite; }
+.ui-next:focus-visible { outline: calc(3 * var(--px)) solid var(--button); outline-offset: 2px; }
+
+.ui-choices { position: absolute; right: calc(-8 * var(--px)); bottom: calc(100% + 18 * var(--px)); display: flex; flex-direction: column;
+  align-items: flex-end; gap: calc(10 * var(--px)); pointer-events: auto; }
+.ui-choice { min-width: calc(280 * var(--px)); display: flex; align-items: center; gap: calc(10 * var(--px)); text-align: left;
+  padding: calc(6 * var(--px)) calc(18 * var(--px)) calc(6 * var(--px)) calc(10 * var(--px)); cursor: pointer;
+  font-size: max(18px, calc(22 * var(--px))); line-height: 1.35; transition: translate 60ms, box-shadow 60ms, background 60ms; }
+.ui-choice:nth-child(odd) { rotate: .6deg; } .ui-choice:nth-child(even) { rotate: -.8deg; }
+.ui-choice:hover, .ui-choice:focus-visible, .ui-choice.ui-sel { background: var(--button); translate: calc(-2 * var(--px)) calc(-2 * var(--px));
+  box-shadow: calc(6 * var(--px)) calc(7 * var(--px)) 0 var(--shadow); outline: none; }
+.ui-choice.ui-fixed { color: var(--shadow); }
+
+/* ---- show picker ---- */
+.ui-picker-wrap { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(31, 40, 45, .5); pointer-events: auto; }
+.ui-picker { width: calc(760 * var(--px)); max-height: calc(600 * var(--px)); display: flex; flex-direction: column; gap: calc(12 * var(--px));
+  padding: calc(18 * var(--px)) calc(22 * var(--px)); box-sizing: border-box; background: var(--notebook); rotate: -.4deg; }
+.ui-picker h3 { margin: 0; font: calc(28 * var(--px)) var(--font-display); letter-spacing: calc(2 * var(--px)); }
+.ui-picker .ui-sub { font-size: max(18px, calc(18 * var(--px))); color: var(--shadow); }
+.ui-picker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: calc(18 * var(--px)) calc(14 * var(--px));
+  overflow-y: auto; padding: calc(10 * var(--px)) calc(8 * var(--px)) calc(14 * var(--px)); min-height: calc(160 * var(--px)); }
+.ui-picker-row { display: flex; justify-content: flex-end; gap: calc(14 * var(--px)); }

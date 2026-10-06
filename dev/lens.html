@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>lens · targets</title>
+  <!-- owner D: the lens self-test runs inside the real game (ARCHITECTURE §3.D): every PhotoTarget row is walked
+       (goto → aim → evalNow) and a pass table with thumbnails is drawn. Add &realtime to watch it live. -->
+  <script>
+    const q = new URLSearchParams(location.search);
+    const base = q.has('realtime') ? '/?skipTitle&mute' : '/?test&seed=1&mute&skipTitle';
+    location.replace(`${base}&dev=lens:${q.get('arg') ?? 'targets'}`);
+  </script>
+</head>
+<body style="background:#65c1bc"></body>
+</html>

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>chars · lineup</title>
+  <!-- owner C: the cast self-view runs inside the real game (ARCHITECTURE §3.C): ?dev=chars lines every character up
+       at sp_bus_bench facing a free camera and cycles the hero's expressions. ?phase=night|dusk|dawn, &arg=bus. -->
+  <script>
+    const q = new URLSearchParams(location.search);
+    const phase = q.get('phase') ? `&phase=${q.get('phase')}` : '';
+    const base = q.has('realtime') ? '/?skipTitle&mute&at=sp_bus_bench' : '/?test&seed=1&mute&skipTitle&at=sp_bus_bench';
+    location.replace(`${base}${phase}&dev=chars${q.get('arg') ? ':' + q.get('arg') : ''}`);
+  </script>
+</head>
+<body style="background:#65c1bc"></body>
+</html>

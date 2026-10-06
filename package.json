@@ -1,0 +1,32 @@
+{
+  "name": "camhead-man-modern",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --port 4173 --strictPort",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "e2e": "node scripts/smoke.mjs",
+    "e2e:golden": "node scripts/smoke.mjs --suite golden",
+    "e2e:all": "node scripts/smoke.mjs --suite all",
+    "shot": "node scripts/shot.mjs",
+    "check:ids": "node scripts/check-gdd-ids.mjs"
+  },
+  "dependencies": {
+    "three": "0.186.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/three": "0.186.0",
+    "playwright": "1.63.0",
+    "typescript": "~6.0.3",
+    "vite": "8.3.1",
+    "vitest": "5.0.2"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}
